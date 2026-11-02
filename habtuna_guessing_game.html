@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Habtuna24</title>
+    <link rel="stylesheet" href="mygame.css">
+    <script src="mygame.js"></script>
+<style type="text/css">
+
+
+</style>
+<style>
+*{
+  
+  text-align: center;
+}
+body{
+  background: #555;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  
+}
+.container
+  {
+  
+  background: papayawhip;
+  box-shadow: 0 0 20px 5px #000;
+  width: 70%;
+  height:100%;
+  overflow: hidden;
+  border-radius: 10px;
+  padding: 10%;
+  font-size: 40px;
+  margin: 100px 5%;
+}
+.input-filed {
+  width: 90%;
+  padding: 20px;
+  font-size: 50px;
+  background: none;
+  margin:30px 10px;
+}
+.score-field{
+  display: flex;
+text-align: center;
+justify-content: center;
+align-items: center;
+margin-top: 10vh;
+
+gap:1rem;
+}
+.new-score,.top-score{
+height: 3vh;
+margin: 3px;
+width: 100%;
+font-size: 3.5rem;
+padding:5px;
+overflow:hidden;
+}
+.input,button{
+  width: calc(70%/2);
+  padding: 20px 30px;
+  margin: 5px;
+  font-size: 30px;
+border-radius: 10px;
+  outline: none;
+  box-shadow: 0 0 10px 3px #333;
+  
+  
+}
+.input{
+  background: #ddd;
+  border: 1px solid #fff;
+text-shadow:0 15px 10px #333;
+}
+ 
+
+
+button {
+  background: deepskyblue;
+  border: 1px solid #fff;
+  color: #fff;
+  text-align: center;
+  transition: 0.001s;
+  text-shadow:0 0px 5px #333;
+}
+button:active{
+  transform: scale(0.97);
+}
+
+@media screen and (max-width:360px){
+  body{
+    height: 90vh;
+  }
+  .container
+  {
+  
+  
+ /* box-shadow: 0 0 20px 5px #000;*/
+  width: 70%;
+  height:50%;
+  border-radius: 10px;
+  padding: 5% 10%;
+  font-size: 15px;
+  margin: 50px 5%;
+}
+.input-filed{
+  
+  margin: 0px ;
+}
+.score-field{
+display:flex;
+gap:1rem
+}
+
+.new-score,.top-score{
+height: 3vh;
+margin: 3px;
+width: 100%;
+resize:none;
+color:#555;
+font-size: 1rem;
+overflow:hidden;
+font-weight:900;
+padding:5px;
+}
+
+.input,
+button{
+  width: 80px;
+font-weight:500;
+  padding: 10px 10px;
+  margin: 0;
+  font-size: 20px;
+  outline: none;
+  box-shadow: 0 0 10px 3px #333;
+  text-align: center;
+  
+}
+}
+   
+
+  
+  
+</style>
+</head>
+
+<body class="body">
+  
+  
+  <div class="container">
+    <header>
+       Please guess a number from 1 to 100
+       <br>   
+        
+       
+       <span class="suggestion ">
+         
+       </span>
+    </header>
+    <div class="input-filed">
+      <input min="0" max="100" type="number" class="input">
+      <button id="btn">
+        Check
+      </button>
+
+
+    </div>
+    <footer>
+      you have 
+             <span class="chance">
+               
+             </span>
+      chance
+    </footer>
+    <div class="score-field">
+      <div class="nws" >
+      New score :
+     <textarea class="new-score" disabled="disabled"> 
+     </textarea>
+     </div>
+    <br> 
+    <div class="tps" >
+      Top score :
+    <textarea class="top-score"  disabled="disabled">
+   </textarea>
+   </div>
+   </div>
+
+</body>
+<script type="text/javascript">
+
+</script>
+
+</html>
+
+<script>const btn = document.querySelector("#btn")
+const body = document.querySelector("body")
+const input = document.querySelector(".input")
+const suggestion = document.querySelector(".suggestion")
+const footer = document.querySelector("footer")
+const header = document.querySelector("header")
+const newscore = document.querySelector(".new-score")
+const topscore = document.querySelector(".top-score")
+const Scorefield = document.querySelector(".score-field")
+const remainchance = document.querySelector(".chance")
+const tps = document.querySelector(".tps")
+
+
+function saveScore(){
+  localStorage.setItem('score',topscore.innerHTML)
+}
+function getScore(){
+topscore.innerHTML=
+localStorage.getItem('score')
+
+}
+getScore()
+
+var chance = 10
+score = 999
+ranNum = Math.floor(Math.random()* 100)
+
+remainchance.innerHTML =chance
+btn.onclick=function(){
+  const input = document.querySelector(".input")
+
+
+chance--
+ns = score-99
+score = ns
+console.log(chance)
+if(btn.innerHTML == 'replay'){
+
+window.location.reload()
+
+}
+else
+if( chance == 0  ){
+if(input.value == ranNum  ){
+[input.disabled]=["true"]
+header.innerHTML="Congratulations you have won the game."
+header.style.color="#429242"
+footer.innerHTML="start another game"
+btn.innerHTML="replay"
+newscore.innerHTML = score
+topscore.innerHTML= Number(topscore.innerHTML) + Number(newscore.innerHTML)
+
+  saveScore()
+}
+
+else{
+[input.disabled]=["true"]
+header.innerHTML="Oopps.."+"<br>"+"The Number was "+ ranNum
+header.style.color="#555"
+footer.innerHTML="You have lose the game. please try again"
+btn.innerHTML="replay"
+
+
+newscore.innerHTML = 0
+
+topscore.innerHTML= Number(topscore.innerHTML) - 990
+
+
+
+  saveScore()
+
+}
+
+
+}
+else
+if(chance < 11 && chance > -1   ){
+remainchance.innerHTML = chance
+btn.innerHTML = 'Check'
+
+if(input.value == ranNum  ){
+[input.disabled]=["true"]
+header.innerHTML="Congratulations you have won the game."
+header.style.color="#429242"
+footer.innerHTML="start another game"
+btn.innerHTML="replay"
+
+newscore.innerHTML = score
+
+topscore.innerHTML= Number(topscore.innerHTML)+Number(newscore.innerHTML)
+
+  saveScore()
+}
+
+  
+
+
+// suggestion to get exact Number
+
+else
+if(input.value > ranNum  ){
+suggestion.innerHTML="You have guessed high number"
+suggestion.style.color="#425292"
+  
+}
+else
+if(input.value < ranNum  ){
+suggestion.innerHTML="You have guessed low number"
+suggestion.style.color="#555"
+  
+}
+
+if(input.value < 0 || input.value > 100 ){
+suggestion.innerHTML="You have guessed invalid number"
+suggestion.style.color="red"
+  
+}
+input.value=''
+
+}
+
+
+
+}
+
+
+console.log(ranNum)
+
+
+
+//localStorage.clear()
+
+</script>
